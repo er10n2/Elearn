@@ -1,0 +1,43 @@
+# --- CRITICAL: SENSITIVE DATA ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# --- DEPENDENCIES ---
+node_modules/
+jspm_packages/
+.pnpm-store/
+
+# --- BUILD & OUTPUT ---
+dist/
+build/
+.next/
+out/
+.docusaurus/
+.cache/
+
+# --- LOGS ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- SYSTEM & IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# --- TESTING ---
+coverage/
+.nyc_output
