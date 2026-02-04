@@ -15,8 +15,12 @@
         <div class="hero-overlay">
             <div class="hero-content">
                 <h1>Ignite Your Future</h1>
-                <p>Discover a world of knowledge and opportunity with UniPortal.</p>
-                <a href="/register" class="btn-hero">Join Now</a>
+                <p>Discover a world of knowledge and opportunity with Elearn.</p>
+          <% if (!locals.user) { %>
+        <a href="/register" class="btn-hero">Join Now</a>
+    <% } else { %>
+        <p>Welcome back, <%= user.email %>!</p>
+    <% } %>
             </div>
         </div>
     </section>

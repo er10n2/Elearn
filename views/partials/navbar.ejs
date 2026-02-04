@@ -1,10 +1,20 @@
 <nav class="navbar">
     <div class="nav-container">
-        <a href="/" class="nav-logo">UniPortal</a>
+        <a href="/" class="nav-logo">Elearn</a>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register" class="btn-signup">Sign Up</a></li>
+
+            <% if (locals.user) { %>
+                <% if(user.role === 'professor') { %>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                <% } %>
+
+                <li><a href="/logout" class="btn-logout">Logout</a></li>
+
+            <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register" class="btn-signup">Sign Up</a></li>
+            <% } %>
         </ul>
     </div>
 </nav>

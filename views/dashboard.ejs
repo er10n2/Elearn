@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/navbar.ejs') %>
+<main class="dashboard-wrapper">
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-icon">📚</div>
+            <h1>Create a New Course</h1>
+            <p>Publish your knowledge and start teaching today.</p>
+        </header>
+
+        <form action="/create-course" method="POST" class="course-form">
+            <div class="form-group">
+                <label for="title">Course Title</label>
+                <input type="text" id="title" name="title" placeholder="e.g. Master PostgreSQL Architecture" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Course Description</label>
+                <textarea id="description" name="description" rows="6" placeholder="What are the key learning outcomes?..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <span>Deploy Course</span>
+                <i class="arrow-icon">→</i>
+            </button>
+        </form>
+    </div>
+</main>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

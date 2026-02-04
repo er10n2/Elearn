@@ -1,0 +1,139 @@
+
+.dashboard-wrapper {
+    min-height: calc(100vh - 150px); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px; 
+    margin-top: 20px;    
+    margin-bottom: 20px; 
+    background-color: #f8f9fa;
+}
+
+
+.dashboard-container {
+    width: 100%;
+    max-width: 650px; 
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.header-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.dashboard-header p {
+    color: #6c757d;
+    font-size: 1rem;
+}
+
+/* 4. Form and Inputs */
+.course-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input, 
+.form-group textarea {
+    padding: 14px;
+    border: 2px solid #e9ecef; 
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+}
+
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #3498db;
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 30px;
+        margin: 20px;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .dashboard-wrapper {
+        padding: 10px;
+    }
+    
+    .dashboard-container {
+        padding: 20px;
+        border-radius: 0; 
+        box-shadow: none;
+    }
+
+    .btn-submit {
+        font-size: 1rem;
+        padding: 14px;
+    }
+}
