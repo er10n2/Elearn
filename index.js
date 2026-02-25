@@ -204,6 +204,57 @@ app.post('/create-course', async (req,res)=>{
 
 
 
+
+app.get('/profile', async(req,res)=>{
+
+    if(!req.session.user){
+        return res.redirect('/login');
+    }
+
+    const userId = req.session.user.id;
+    const role = req.session.user.role;
+
+    try{
+
+        if(role === 'professor'){
+
+            const result = await db.query("SELECT * FROM professor WHERE id = $1", [userId]);
+            const professorData = result.rows[0];
+
+            professorData.email = req.session.user.email;
+            professorData.role = 'professor';
+
+            res.render('profile', {user:professorData});
+
+
+
+
+        }else{
+
+            const result = await db.query("SELECT * FROM student WHERE id=$1",[userId]);
+            const studentData = result.rows[0];
+
+            studentData.email = req.session.user.email;
+            studentData.role='student';
+
+            res.render('profile',{user:studentData});
+        }
+        
+
+
+
+
+    }catch(error){
+       console.log("Error loading profile:", error);
+        res.send("Could not load profile.");
+
+
+    }
+ 
+})
+
+
+
 app.listen(3000, function(){
     console.log("Running on port 3000");
 })
