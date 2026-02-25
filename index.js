@@ -255,6 +255,70 @@ app.get('/profile', async(req,res)=>{
 
 
 
+
+
+app.post('/update-profile',async(req,res)=>{
+
+
+    if(!req.session.user){
+        return res.redirect('/login');
+    }
+
+    const name = req.body.firstName;
+    const lastname = req.body.lastName;
+    const email = req.body.email;
+    const department = req.body.department;
+    const major = req.body.major;
+
+
+    const userId = req.session.user.id;
+    const role = req.session.user.role;
+
+    try{
+
+        await db.query("UPDATE users SET email =$1 WHERE id = $2", [email, userId]);
+
+        if(role === 'professor'){
+
+            await db.query("UPDATE professor SET name = $1, lastname = $2, department=$3 WHERE id=$4",[
+                name, lastname, department, userId
+            ]);
+
+        }else{
+            await db.query(
+
+                "UPDATE student SET name = $1, lastname= $2, major= $3 WHERE id= $4",[
+
+                    name, lastname,major, userId
+                ]
+            );
+        }
+
+        req.session.user.email = email;
+        req.session.user.name = name;
+       req.session.user.lastname = lastname;
+
+       if(role==='professor'){
+         req.session.user.department = department;
+       }else{
+        req.session.user.major = major;
+       }
+
+
+        res.redirect('/profile');
+
+    }catch(error){
+        console.log(error);
+        res.send("Error updating your data.");
+
+    }
+});
+
+
+
+
+
+
 app.listen(3000, function(){
     console.log("Running on port 3000");
 })
