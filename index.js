@@ -316,6 +316,97 @@ app.post('/update-profile',async(req,res)=>{
 
 
 
+app.post('/update-password',async(req, res)=>{
+
+    if(!req.session.user){
+
+       return res.redirect('/login');
+
+    }else{
+
+
+
+    const currentPass = req.body.currentPassword;
+    const newPass = req.body.newPassword;
+    const confirmPass = req.body.confirmPassword;
+
+    const userEmail = req.session.user.email;
+    const userId = req.session.user.id;
+
+
+    if(newPass !== confirmPass){
+        
+       return res.status(400).send("New Password and Confirm Password do not match!");
+
+    }else{
+
+    try{
+
+    const result = await db.query("SELECT * FROM users WHERE email =$1 AND id=$2",[userEmail,userId]);
+
+    /*  
+    When you use a library like pg (node-postgres), the result variable isn't just a list of users; 
+    it is a Result Object that contains metadata about the query.
+     The actual data you want is stored inside a property called .rows, which is an Array of Objects.
+    
+    */
+
+    if(result.rows.length > 0){
+
+        const userToupdate = result.rows[0];
+        const hashedPassStoredInDb = userToupdate.password;
+
+
+        
+        bcrypt.compare(currentPass, hashedPassStoredInDb, (err, isMatch)=>{
+
+            if(err){
+
+                console.log(err);
+              return  res.status(500).send("Error comparing passwords");
+            }else{
+                if(isMatch){
+
+
+
+                    bcrypt.hash(newPass,saltRounds, async (err, hash)=>{
+
+                        if(err){
+                            console.log("error hashing password");
+                        }else{
+                          await db.query("UPDATE users SET password = $1 WHERE id = $2",[hash, userId]);
+
+                          res.send("Password updated successfully!");
+
+                        }
+
+                    })
+
+
+                     
+                }else{
+                    return  res.status(500).send("Current Password is incorrect!");
+                }
+            }
+        })
+
+    }
+
+    }catch(error){
+        console.log(error);
+        res.status(500).send("Server error");
+
+    }
+
+
+}
+
+    }
+
+
+})
+
+
 
 
 

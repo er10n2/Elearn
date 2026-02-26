@@ -21,44 +21,73 @@
                 <p>Update your personal information below.</p>
             </header>
 
-            <form action="/update-profile" method="POST" class="course-form">
-                
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" value="<%= user.name %>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" value="<%= user.lastname %>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" value="<%= user.email %>" required>
-                </div>
-
-                <% if(user.role === 'professor') { %>
+            <section class="profile-section">
+                <h3>Personal Information</h3>
+                <form action="/update-profile" method="POST" class="course-form">
                     <div class="form-group">
-                        <label for="department">Department</label>
-                        <input type="text" id="department" name="department" value="<%= user.department %>">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" value="<%= user.name %>" required>
                     </div>
-                <% } else { %>
+
                     <div class="form-group">
-                        <label for="major">Major</label>
-                        <input type="text" id="major" name="major" value="<%= user.major %>">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" value="<%= user.lastname %>" required>
                     </div>
-                <% } %>
 
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                    </div>
 
-               
+                    <% if(user.role === 'professor') { %>
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <input type="text" id="department" name="department" value="<%= user.department %>">
+                        </div>
+                    <% } else { %>
+                        <div class="form-group">
+                            <label for="major">Major</label>
+                            <input type="text" id="major" name="major" value="<%= user.major %>">
+                        </div>
+                    <% } %>
 
-                <button type="submit" class="btn-submit">
-                    <span>Save Changes</span>
-                    <i class="arrow-icon">✓</i>
-                </button>
-            </form>
+                    <button type="submit" class="btn-submit">
+                        <span>Save Profile Changes</span>
+                        <i class="arrow-icon">✓</i>
+                    </button>
+                </form>
+            </section>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+            <section class="password-section">
+                <header class="dashboard-header" style="text-align: left; padding: 0; margin-bottom: 20px;">
+                    <h3>Security</h3>
+                    <p>Change your password to keep your account secure.</p>
+                </header>
+
+                <form action="/update-password" method="POST" class="course-form">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm New Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="background-color: #2c3e50;">
+                        <span>Update Password</span>
+                        <i class="arrow-icon">🔒</i>
+                    </button>
+                </form>
+            </section>
 
         </div>
     </main>
