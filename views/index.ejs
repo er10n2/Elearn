@@ -24,6 +24,23 @@
             </div>
         </div>
     </section>
+    <section class="courses-container">
+    <h2 class="section-title">Available Courses</h2>
+    <div class="courses-grid">
+        <% Allcourses.forEach(course => { %>
+            <div class="course-card">
+                <div class="course-content">
+                    <h3 class="course-title"><%= course.title %></h3>
+                    <p class="professor-name">
+            By: Prof. <%= course.name %> <%= course.lastname %>
+        </p>
+                    <p class="course-description"><%= course.description %></p>
+                    <a href="/courses/<%= course.id %>" class="btn-view">View Course</a>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</section>
 </main>
 
 

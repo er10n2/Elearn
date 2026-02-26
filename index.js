@@ -32,10 +32,27 @@ app.use(session({
 }));
 
 
-app.get('/', (req,res)=>{
+app.get('/', async(req,res)=>{
 
-    res.render("index", {user:req.session.user});
-})
+
+    try{
+
+        const result = await db.query("SELECT course.*, professor.name, professor.lastname FROM course JOIN professor ON course.professor_id = professor.id");
+           
+        const Allcourses = result.rows;
+
+        if(result.rows.length ===0){
+             return res.status(404).send("No course Avaliable");
+        }else{
+               res.render("index", {user:req.session.user,Allcourses});
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+    
+});
 
 app.get('/register',(req,res)=>{
 
@@ -390,6 +407,9 @@ app.post('/update-password',async(req, res)=>{
             }
         })
 
+    }else{
+
+        return res.status(404).send("User not found!");
     }
 
     }catch(error){
@@ -404,7 +424,14 @@ app.post('/update-password',async(req, res)=>{
     }
 
 
-})
+});
+
+
+
+
+
+
+
 
 
 
