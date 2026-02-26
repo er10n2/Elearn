@@ -54,6 +54,43 @@ app.get('/', async(req,res)=>{
     
 });
 
+
+app.post('/enroll',async(req,res)=>{
+
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+
+
+    if(req.session.user.role !== "student"){
+
+        return res.status(403).send("You must be a student in order to enroll in a course.")
+    }
+
+        const studentId = req.session.user.id;
+        const courseId = req.body.courseId;
+
+        try{
+
+            await db.query("INSERT INTO student_enrollments(student_id, course_id) VALUES($1, $2)",[
+                 studentId,courseId
+            ]);
+
+            res.send("Successfully enrolled in the course!");
+
+        }catch(error){
+
+            if(error.code ==='23505'){
+                return res.status(400).send("You are already enrolled in this course.");
+            }
+   
+            console.log(error);
+            res.status(500).send("Error during enrollment.");
+        }
+    
+
+});
+
 app.get('/register',(req,res)=>{
 
     res.render("register");

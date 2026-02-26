@@ -35,7 +35,10 @@
             By: Prof. <%= course.name %> <%= course.lastname %>
         </p>
                     <p class="course-description"><%= course.description %></p>
-                    <a href="/courses/<%= course.id %>" class="btn-view">View Course</a>
+                <form action="/enroll" method="POST">
+            <input type="hidden" name="courseId" value="<%= course.id %>">
+            <button type="submit" class="btn-view">Enroll Now</button>
+        </form>
                 </div>
             </div>
         <% }); %>
