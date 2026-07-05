@@ -212,8 +212,130 @@ main {
 }
 
 
+.learning-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.learning-header {
+    margin-bottom: 40px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+}
+
+/* Status Badge */
+.status-badge {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Progress Bar Styling */
+.progress-container {
+    background-color: #eee;
+    border-radius: 10px;
+    height: 8px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background-color: #2ecc71;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.btn-start {
+    display: block;
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-start:hover {
+    background-color: #34495e;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 100px 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.btn-browse {
+    display: inline-block;
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: underline;
+}
 
 
+
+
+
+/* Message Alerts */
+.message-container {
+    margin-bottom: 20px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message {
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.close-message {
+    cursor: pointer;
+    margin-left: auto;
+    font-size: 20px;
+    color: inherit;
+}
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
@@ -276,7 +398,15 @@ main {
 
 
 
-
+.login-error{
+    background-color:#fde8e8;
+    color:#c62828;
+    border:1px solid #ef9a9a;
+    padding:12px;
+    margin-bottom:20px;
+    border-radius:8px;
+    text-align:center;
+}
 
 
 
