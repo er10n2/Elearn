@@ -9,6 +9,10 @@
                     <li><a href="/dashboard">Dashboard</a></li>
                 <% } %>
 
+                <% if(user.role === 'student') { %>
+                      <li><a href="/my-learning">My Learning</a></li>
+                <% } %>
+              
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/logout" class="btn-logout">Logout</a></li>
 
