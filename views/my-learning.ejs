@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning - Elearn</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/navbar.ejs') %>
+
+    <main class="learning-container">
+        <header class="learning-header">
+            <h1>My Learning</h1>
+            <p>Continue where you left off, <%= user.email %>.</p>
+        </header>
+
+        <% if (enrolledCourses.length === 0) { %>
+            <div class="empty-state">
+                <p>You haven't enrolled in any courses yet.</p>
+                <a href="/" class="btn-browse">Browse Courses</a>
+            </div>
+        <% } else { %>
+            <div class="courses-grid">
+                <% enrolledCourses.forEach(course => { %>
+                    <div class="course-card enrolled">
+                        <div class="course-content">
+                            <span class="status-badge">Enrolled</span>
+                            <h3 class="course-title"><%= course.title %></h3>
+                            <p class="professor-name">Prof. <%= course.name %> <%= course.lastname %></p>
+                            
+                            
+                            
+                            <a href="/courses/<%= course.id %>" class="btn-start">Go to Course</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
+    </main>
+
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

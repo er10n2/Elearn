@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= course.title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .course-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .course-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+
+        .course-header p {
+            margin: 5px 0;
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .course-details {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 20px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: #555;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .professor-info {
+            background: #f0f4ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <main>
+        <div class="course-container">
+            <a href="/my-learning" class="back-button">← Back to My Learning</a>
+
+            <div class="course-header">
+                <h1><%= course.title %></h1>
+                <p>Course ID: <%= course.id %></p>
+            </div>
+
+            <div class="course-details">
+                <div class="detail-item">
+                    <div class="detail-label">Course Description</div>
+                    <div class="detail-value">
+                        <%= course.description %>
+                    </div>
+                </div>
+
+                <div class="detail-item">
+                    <div class="detail-label">Instructor</div>
+                    <div class="professor-info">
+                        <strong><%= course.name %> <%= course.lastname %></strong>
+                        <p style="margin: 10px 0 0 0; color: #666; font-size: 0.9em;">Professor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

@@ -6,6 +6,7 @@
     <title>Professor Dashboard</title>
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/form-helper.js"></script>
 </head>
 <body>
     <%- include('partials/navbar.ejs') %>
@@ -17,7 +18,10 @@
             <p>Publish your knowledge and start teaching today.</p>
         </header>
 
-        <form action="/create-course" method="POST" class="course-form">
+        <!-- Message Display Area -->
+        <div class="message-container"></div>
+
+        <form id="courseForm" action="/create-course" method="POST" class="course-form">
             <div class="form-group">
                 <label for="title">Course Title</label>
                 <input type="text" id="title" name="title" placeholder="e.g. Master PostgreSQL Architecture" required>
@@ -36,5 +40,76 @@
     </div>
 </main>
     <%- include('partials/footer.ejs') %>
+
+    <script>
+        const courseForm = document.getElementById('courseForm');
+        const messageContainer = document.querySelector('.message-container');
+
+        if (courseForm) {
+            courseForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(courseForm);
+                    const response = await fetch(courseForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            title: formData.get('title'),
+                            description: formData.get('description')
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        showMessage(messageContainer, data.message, 'success');
+                        courseForm.reset(); // Clear the form
+                    } else {
+                        if (response.status === 401) {
+                            showMessage(messageContainer, data.message + ' Redirecting to login...', 'error');
+                            setTimeout(() => {
+                                window.location.href = '/login';
+                            }, 2000);
+                        } else {
+                            showMessage(messageContainer, data.message, 'error');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showMessage(messageContainer, 'Something went wrong. Please try again.', 'error');
+                }
+            });
+        }
+
+        // Helper function to display messages
+        function showMessage(container, message, type) {
+            container.innerHTML = '';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${type}`;
+            
+            const icon = type === 'success' ? '✓' : '✕';
+            messageDiv.innerHTML = `
+                <span>${icon}</span>
+                <span>${message}</span>
+                <span class="close-message" onclick="this.parentElement.style.display='none';">&times;</span>
+            `;
+            
+            container.appendChild(messageDiv);
+            
+            // Auto-hide error messages after 5 seconds
+            if (type === 'error') {
+                setTimeout(() => {
+                    if (messageDiv.parentElement) {
+                        messageDiv.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }
+    </script>
+
 </body>
 </html>

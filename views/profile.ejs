@@ -6,6 +6,7 @@
     <title>Profile | Elearn</title>
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/form-helper.js"></script>
 </head>
 <body>
 
@@ -23,7 +24,11 @@
 
             <section class="profile-section">
                 <h3>Personal Information</h3>
-                <form action="/update-profile" method="POST" class="course-form">
+                
+                <!-- Message Display Area -->
+                <div class="message-container"></div>
+
+                <form id="profileForm" action="/update-profile" method="POST" class="course-form">
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <input type="text" id="firstName" name="firstName" value="<%= user.name %>" required>
@@ -66,7 +71,10 @@
                     <p>Change your password to keep your account secure.</p>
                 </header>
 
-                <form action="/update-password" method="POST" class="course-form">
+                <!-- Message Display Area for Password -->
+                <div class="message-container"></div>
+
+                <form id="passwordForm" action="/update-password" method="POST" class="course-form">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
                         <input type="password" id="currentPassword" name="currentPassword" required>
@@ -94,6 +102,125 @@
     <% } %>
 
     <%- include('partials/footer.ejs') %>
+
+    <script>
+        // Set up profile form
+        const profileForm = document.getElementById('profileForm');
+        if (profileForm) {
+            // Get the message container for this form
+            const messageContainer = profileForm.previousElementSibling;
+            
+            profileForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(profileForm);
+                    const response = await fetch(profileForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                             firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        department: formData.get('department'),
+        major: formData.get('major')
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        showMessage(messageContainer, data.message, 'success');
+                    } else {
+                        if (response.status === 401) {
+                            showMessage(messageContainer, data.message + ' Redirecting to login...', 'error');
+                            setTimeout(() => {
+                                window.location.href = '/login';
+                            }, 2000);
+                        } else {
+                            showMessage(messageContainer, data.message, 'error');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showMessage(messageContainer, 'Something went wrong. Please try again.', 'error');
+                }
+            });
+        }
+
+        // Set up password form
+        const passwordForm = document.getElementById('passwordForm');
+        if (passwordForm) {
+            // Get the message container for this form
+            const messageContainer = passwordForm.previousElementSibling;
+            
+            passwordForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(passwordForm);
+                    const response = await fetch(passwordForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                       body: JSON.stringify({
+    currentPassword: formData.get('currentPassword'),
+    newPassword: formData.get('newPassword'),
+    confirmPassword: formData.get('confirmPassword')
+})
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        showMessage(messageContainer, data.message, 'success');
+                        passwordForm.reset(); // Clear form
+                    } else {
+                        if (response.status === 401) {
+                            showMessage(messageContainer, data.message + ' Redirecting to login...', 'error');
+                            setTimeout(() => {
+                                window.location.href = '/login';
+                            }, 2000);
+                        } else {
+                            showMessage(messageContainer, data.message, 'error');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showMessage(messageContainer, 'Something went wrong. Please try again.', 'error');
+                }
+            });
+        }
+
+        // Helper function to display messages
+        function showMessage(container, message, type) {
+            container.innerHTML = '';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${type}`;
+            
+            const icon = type === 'success' ? '✓' : '✕';
+            messageDiv.innerHTML = `
+                <span>${icon}</span>
+                <span>${message}</span>
+                <span class="close-message" onclick="this.parentElement.style.display='none';">&times;</span>
+            `;
+            
+            container.appendChild(messageDiv);
+            
+            // Auto-hide error messages after 5 seconds
+            if (type === 'error') {
+                setTimeout(() => {
+                    if (messageDiv.parentElement) {
+                        messageDiv.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }
+    </script>
 
 </body>
 </html>
